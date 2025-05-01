@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // import "../node_modules/slick-carousel/slick/slick.css";
-import "../../node_modules/slick-carousel/slick/slick.css"
-import "../../node_modules/slick-carousel/slick/slick-theme.css";
+// import "/node_modules/slick-carousel/slick/slick"
+// import "/node_modules/slick-carousel/slick/slick-theme";
 import Navbar from '../Components/Navbar/Navbar'
 import { Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';

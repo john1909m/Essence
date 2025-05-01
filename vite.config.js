@@ -20,6 +20,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base:"/",
   plugins: [react()],
+  
   optimizeDeps: {
     include: ['react-slick', 'slick-carousel'],
     force: true
