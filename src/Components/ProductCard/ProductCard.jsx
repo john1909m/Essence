@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
 // import { useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
 
 export default function ProductCard({name,id, href, imageAlt, imageSrc, price, category}) {
-const {setCartProducts,setWishProducts}=useOutletContext()
+const {setCartProducts,cartProducts,setWishProducts,wishProducts}=useOutletContext()
   const addCartItem=(item)=>{
     setCartProducts(prev => [...prev,item])
   }
   const addWishItem=(item)=>{
     setWishProducts(prev => [...prev,item])
   }
+
+useEffect(()=>{
+  localStorage.setItem("wishList",JSON.stringify(wishProducts))
+  localStorage.setItem("cartProducts",JSON.stringify(cartProducts))
+  // console.log("added");
+  // console.log(localStorage.getItem("wishList"));
+  
+},[wishProducts,cartProducts])
   // console.log(cartProducts);
   
   return (
@@ -33,7 +41,7 @@ const {setCartProducts,setWishProducts}=useOutletContext()
           </h3>
           <p className="mt-1 text-md text-gray-500">{category}</p>
         </div>
-        <p className="text-lg font-medium text-gray-900">{price}</p>
+        <p className="text-lg font-medium text-gray-900">${price}</p>
       </div>
       <div className="btns flex justify-between gap-1 mt-3">
         <button className='bg-indigo-600 p-1 w-full rounded-md h-[5vh] text-[16px] font-semibold text-white hover:bg-indigo-800 transition-all' onClick={()=>{
@@ -54,7 +62,9 @@ const {setCartProducts,setWishProducts}=useOutletContext()
             price:price,
             imageSrc:imageSrc
           })
-          console.log("added");
+
+
+          
           
         }} className='bg-red-600 w-[20%] p-1 rounded-md flex justify-center items-center h-[5vh] text-[16px] font-semibold text-white hover:bg-red-800 transition-all'>
           <HeartIcon className='h-5 w-5'></HeartIcon>

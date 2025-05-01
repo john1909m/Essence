@@ -1,64 +1,94 @@
-import React, { useState , Fragment } from 'react'
+import React, { useState , Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, ChevronDownIcon, HeartIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Button, Dialog, DialogPanel,DialogTitle,DialogBackdrop  } from '@headlessui/react'
 
 
-const initialNavigation = [
- 
-  { name: 'Home', href: '/', current: true },
-  { 
-    name: 'All Products', 
-    href: '#', 
-    current: false,
-    submenu: [
-      { name: 'All Products', href: '/products' },
-      { name: 'beauty', href: `/products` },
-      { name: 'fragrances', href: '#' },
-      { name: 'furniture', href: `/products` },
-      { name: 'groceries', href: '#' },
-      { name: 'home-decoration', href: '#' },
-      { name: 'kitchen-accessories', href: '#' },
-      { name: 'laptops', href: '#' },
-      { name: 'mens-shirts', href: '#' },
-      { name: 'mens-shoes', href: '#' },
-      { name: 'mens-watches', href: '#' },
-      { name: 'mobile-accessories', href: '#' },
-      { name: 'motorcycle', href: '#' },
-      { name: 'skin-care', href: '#' },
-      { name: 'smartphones', href: '#' },
-      { name: 'sports-accessories', href: '#' },
-      { name: 'sunglasses', href: '#' },
-      { name: 'tablets', href: '#' },
-      { name: 'tops', href: '#' },
-      { name: 'vehicle', href: '#' },
-      { name: 'womens-bags', href: '#' },
-      { name: 'womens-dresses', href: '#' },
-      { name: 'womens-jewellery', href: '#' },
-      { name: 'womens-shoes', href: '#' },
-      { name: 'womens-watches', href: '#' },
-      
-    ]
-  },
-  { name: 'About', href: '/about', current: false },
-  { name: 'Contact', href: '/contact', current: false },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 
-export default function Navbar({cartProducts,setCartProducts,wishProducts,setWishProducts}) {
+export default function Navbar({cartProducts,setCartProducts,wishProducts,setWishProducts,setSelectedCategory}) {
+
+
+
+
+
+  const initialNavigation = [
+ 
+    { name: 'Home', href: '/', current: true },
+    { 
+      name: 'All Products', 
+      href: '#', 
+      current: false,
+      submenu: [
+        { name: 'All Products', href: '/products/all-products:' },
+        { name: 'beauty', href: '/products/:beauty' },
+        { name: 'fragrances', href: '/products/:fragrances' },
+        { name: 'furniture', href: `/products/:furniture` },
+        { name: 'groceries', href: '/products/:groceries' },
+        { name: 'home-decoration', href: '/products/:home-decoration' },
+        { name: 'kitchen-accessories', href: '/products/:kitchen-accessories' },
+        { name: 'laptops', href: '/products/:laptops' },
+        { name: 'mens-shirts', href: '/products/:mens-shirts' },
+        { name: 'mens-shoes', href: '/products/:mens-shoes' },
+        { name: 'mens-watches', href: '/products/:mens-watches' },
+        { name: 'mobile-accessories', href: '/products/:mobile-accessories' },
+        { name: 'motorcycle', href: '/products/:motorcycle' },
+        { name: 'skin-care', href: '/products/:skin-care' },
+        { name: 'smartphones', href: '/products/:smartphones' },
+        { name: 'sports-accessories', href: '/products/:sports-accessories' },
+        { name: 'sunglasses', href: '/products/:sunglasses' },
+        { name: 'tablets', href: '/products/:tablets' },
+        { name: 'tops', href: '/products/:tops' },
+        { name: 'vehicle', href: '/products/:vehicle' },
+        { name: 'womens-bags', href: '/products/:womens-bags' },
+        { name: 'womens-dresses', href: '/products/:womens-dresses' },
+        { name: 'womens-jewellery', href: '/products/:womens-jewellery' },
+        { name: 'womens-shoes', href: '/products/:womens-shoes' },
+        { name: 'womens-watches', href: '/products/:womens-watches' },
+        
+      ]
+    },
+    { name: 'About', href: '/about', current: false },
+    { name: 'Contact', href: '/contact', current: false },
+  ]
+  
+
+  // console.log(catParams);
+
   const [navigation, setNavigation] = useState(initialNavigation)
   const [isOpen,setIsOpen]=useState(false)
   const [RegIsOpen,setRegIsOpen]=useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
 
+
+
   const products = cartProducts || []
   const wishlistItems = wishProducts || []
+
+  useEffect(()=>{
+    const wishStored=localStorage.getItem("wishList")
+    const cartStored=localStorage.getItem("cartProducts")
+    if (wishStored){
+      setWishProducts(JSON.parse(wishStored))
+      
+      
+    }
+    else{
+      setWishProducts([])
+    }
+    if(cartStored){
+      setCartProducts(JSON.parse(cartStored))
+    }
+    else{
+      setCartProducts([])
+    }
+  },[setWishProducts,setCartProducts])
   function openCartModal(){
     setCartOpen(true)
   }
@@ -80,9 +110,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
       current: item.name === clickedItem.name
     })))
   }
-  const addCartItem=(item)=>{
-    setCartProducts(prev => [...prev,item])
-  }
+
   return (
 
 <>
@@ -158,6 +186,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                     <div className="flex space-x-4">
                                       <button
                                       onClick={()=>{
+
                                         setCartProducts(prev => [...prev, {
                                           id: item.id,
                                           title: item.title,
@@ -174,10 +203,12 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                       <button
                                       onClick={()=>{
 
-                                        
+                                        localStorage.setItem("wishList",JSON.stringify(wishProducts))
+                                        console.log("removed");
+                                        console.log(localStorage.getItem("wishList"));
                                         setWishProducts(prev => {
                                           const index = prev.findIndex(item => item.id === wishlistItems.id);
-                                          if (index !== -1) {
+                                          if (index >= 0) {
                                             const newCart = [...prev];
                                             newCart.splice(index, 1);
                                             return newCart;
@@ -203,10 +234,14 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="mt-6">
                         <a
+                        onClick={()=>{
+                          setWishlistOpen(false);
+                          openCartModal()
+                        }}
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
-                          View All Wishlist Items
+                          Go To Cart
                         </a>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
@@ -299,7 +334,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                   <h3>
                                     <a href={product.href}>{product.title}</a>
                                   </h3>
-                                  <p className="ml-4">{product.price}</p>
+                                  <p className="ml-4">${product.price}</p>
                                 </div>
                                 <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                               </div>
@@ -335,16 +370,20 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <p>Subtotal</p>
-                    <p>$262.00</p>
+                    <p>${products.reduce((total, product) => total + Number(product.price), 0)}</p>
                   </div>
                   <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                  <div className="mt-6">
-                    <a
-                      href="#"
+                  <div className="mt-6 " onClick={()=>{
+                    setCartOpen(false)
+                  }}>
+                    <Link
+                      to="/checkout"
+                      
+                      state={{ cartProducts: products }}
                       className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700"
                     >
                       Checkout
-                    </a>
+                    </Link>
                   </div>
                   <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                     <p>
@@ -521,7 +560,11 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                           {item.submenu.map((subItem) => (
                             <MenuItem key={subItem.name}>
                               {({ focus }) => (
-                                <a href={subItem.href} className={classNames(
+                                <a href={subItem.href} onClick={()=>{
+                                  setSelectedCategory(subItem.name)
+                                  console.log(subItem.name);
+                                  
+                                }} className={classNames(
                                     focus ? 'bg-indigo-300 transition-all rounded-sm' : '',
                                     'block px-4 py-2 text-sm text-indigo-800'
                                   )}
