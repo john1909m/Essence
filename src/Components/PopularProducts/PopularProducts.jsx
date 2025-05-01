@@ -1,67 +1,19 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 export default function PopularProducts() {
+  let [TopsProducts , setTopsProducts]=useState([])
 
-    const products = [
-        {
-          id: 1,
-          name: 'Basic Tee ',
-          href: '#',
-          imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-          imageAlt: "Front of men's Basic Tee in black.",
-          price: '$35',
-          color: 'Black',
-        },
-        {
-            id: 2,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-          },
-          {
-            id: 3,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-          },
-          {
-            id: 4,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-          },
-          {
-            id: 5,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-          },
-          {
-            id: 6,
-            name: 'Basic Tee',
-            href: '#',
-            imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-            imageAlt: "Front of men's Basic Tee in black.",
-            price: '$35',
-            color: 'Black',
-          },
-        ]
+  useEffect(()=>{
+    fetch("https://dummyjson.com/products/category/tops")
+    .then((res)=>res.json())
+    .then((products)=>setTopsProducts(products.products))
+  },[])
+
+
 
 
         const settings = {
@@ -108,14 +60,14 @@ export default function PopularProducts() {
         </h2>
 
         <Slider {...settings}>
-          {products.map((product) => (
+          {TopsProducts.map((product) => (
             <div key={product.id} className="px-2">
-              <ProductCard 
-                name={product.name}
+              <ProductCard className=""
+                name={product.title}
                 href={product.href}
                 price={product.price}
-                color={product.color}
-                imageSrc={product.imageSrc}
+                category={product.category}
+                imageSrc={product.thumbnail}
                 imageAlt={product.imageAlt}
               />
             </div>
@@ -132,7 +84,7 @@ function SampleNextArrow(props) {
     return (
       <button 
         onClick={onClick}
-        className="absolute right-0 top-1/2 font-bold text-3xl flex justify-center items-center -translate-y-1/2 z-10 bg-indigo-200 p-2 pb-4 rounded-full hover:bg-indigo-300"
+        className="absolute right-0 top-1/2 font-bold text-3xl flex justify-center items-center -translate-y-1/2 z-10 bg-indigo-300 p-2 pb-4 rounded-full hover:bg-indigo-300"
       >
         {">"}
       </button>
@@ -144,7 +96,7 @@ function SampleNextArrow(props) {
     return (
       <button 
         onClick={onClick}
-        className="absolute pb-4 font-bold text-3xl left-0 top-1/2 -translate-y-1/2 z-10 bg-indigo-200 p-2 rounded-full hover:bg-indigo-300"
+        className="absolute pb-4 font-bold text-3xl left-0 top-1/2 -translate-y-1/2 z-10 bg-indigo-300 p-2 rounded-full hover:bg-indigo-300"
       >
         {"<"}
       </button>

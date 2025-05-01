@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function ProductCard({name, href, imageAlt, imageSrc, price, color}) {
+export default function ProductCard({name, href, imageAlt, imageSrc, price, category}) {
   return (
     <div className="group relative">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-indigo-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-indigo-50 lg:aspect-none group-hover:opacity-75 lg:h-80">
         <img
           alt={imageAlt}
           src={imageSrc}
@@ -18,7 +18,7 @@ export default function ProductCard({name, href, imageAlt, imageSrc, price, colo
               {name}
             </a>
           </h3>
-          <p className="mt-1 text-lg text-gray-500">{color}</p>
+          <p className="mt-1 text-md text-gray-500">{category}</p>
         </div>
         <p className="text-lg font-medium text-gray-900">{price}</p>
       </div>
