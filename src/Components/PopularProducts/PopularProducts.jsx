@@ -3,9 +3,13 @@ import ProductCard from '../ProductCard/ProductCard';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useOutletContext } from "react-router-dom";
+
 
 export default function PopularProducts() {
+  const {cartProducts,setCartProducts,wishProducts,setWishProducts}=useOutletContext()
   let [TopsProducts , setTopsProducts]=useState([])
+console.log(cartProducts);
 
   useEffect(()=>{
     fetch("https://dummyjson.com/products/category/tops")
@@ -61,14 +65,19 @@ export default function PopularProducts() {
 
         <Slider {...settings}>
           {TopsProducts.map((product) => (
-            <div key={product.id} className="px-2">
+            <div key={product.id}  className="px-2">
               <ProductCard className=""
                 name={product.title}
                 href={product.href}
+                id={product.id}
                 price={product.price}
                 category={product.category}
                 imageSrc={product.thumbnail}
                 imageAlt={product.imageAlt}
+                cartProducts={cartProducts}
+                setCartProducts={setCartProducts}
+                wishProducts={wishProducts}
+                setWishProducts={setWishProducts}
               />
             </div>
           ))}

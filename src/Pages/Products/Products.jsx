@@ -36,9 +36,6 @@ export default function Products() {
   ];
   let [products , setProducts]=useState([])
   const [selectedCategory, setSelectedCategory] = useState('');
-
-  // let [productsByCategory ,setProductsByCategory ]=useState([])
-  // let [cat, setCat ] = useState("")
   useEffect(() => {
     const apiUrl = selectedCategory 
       ? `https://dummyjson.com/products/category/${selectedCategory}`
@@ -46,12 +43,12 @@ export default function Products() {
     
     fetch(apiUrl)
       .then(res => res.json())
-      .then(data => setProducts(data.products || []));
+      .then(data => setProducts(data.products));
   }, [selectedCategory]);
 
   const handleCategoryClick = (categoryHref) => {
     setSelectedCategory(categoryHref);
-    setMobileFiltersOpen(false); // Close mobile menu if open
+    setMobileFiltersOpen(false);
   };
   console.log(products);
   

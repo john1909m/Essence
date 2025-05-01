@@ -1,6 +1,19 @@
 import React from 'react';
+import { useOutletContext } from "react-router-dom";
+// import { useState } from 'react';
+import { HeartIcon } from '@heroicons/react/24/outline';
 
-export default function ProductCard({name, href, imageAlt, imageSrc, price, category}) {
+
+export default function ProductCard({name,id, href, imageAlt, imageSrc, price, category}) {
+const {setCartProducts,setWishProducts}=useOutletContext()
+  const addCartItem=(item)=>{
+    setCartProducts(prev => [...prev,item])
+  }
+  const addWishItem=(item)=>{
+    setWishProducts(prev => [...prev,item])
+  }
+  // console.log(cartProducts);
+  
   return (
     <div className="group relative">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-indigo-50 lg:aspect-none group-hover:opacity-75 lg:h-80">
@@ -14,13 +27,38 @@ export default function ProductCard({name, href, imageAlt, imageSrc, price, cate
         <div>
           <h3 className="text-lg text-gray-700">
             <a href={href} className='font-bold'>
-              <span aria-hidden="true" className="absolute inset-0" />
+              
               {name}
             </a>
           </h3>
           <p className="mt-1 text-md text-gray-500">{category}</p>
         </div>
         <p className="text-lg font-medium text-gray-900">{price}</p>
+      </div>
+      <div className="btns flex justify-between gap-1 mt-3">
+        <button className='bg-indigo-600 p-1 w-full rounded-md h-[5vh] text-[16px] font-semibold text-white hover:bg-indigo-800 transition-all' onClick={()=>{
+          addCartItem({
+            id:id,
+            title:name,
+            price:price,
+            imageSrc:imageSrc
+          })
+          console.log("added");
+          
+        }}>Add To Cart</button>
+        <button
+        onClick={()=>{
+          addWishItem({
+            id:id,
+            title:name,
+            price:price,
+            imageSrc:imageSrc
+          })
+          console.log("added");
+          
+        }} className='bg-red-600 w-[20%] p-1 rounded-md flex justify-center items-center h-[5vh] text-[16px] font-semibold text-white hover:bg-red-800 transition-all'>
+          <HeartIcon className='h-5 w-5'></HeartIcon>
+           </button>
       </div>
     </div>
   );
