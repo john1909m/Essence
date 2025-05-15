@@ -575,7 +575,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-indigo-700 focus:outline-hidden">
+                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] max-h-[60vh] overflow-y-auto origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-indigo-700 focus:outline-hidden">
                           {item.submenu.map((subItem) => (
                             <MenuItem key={subItem.name}>
                               {({ focus }) => (
@@ -669,7 +669,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <DisclosurePanel className="sm:hidden">
+          <DisclosurePanel className="sm:hidden max-h-[80vh] overflow-y-auto">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
                 item.submenu ? (
@@ -692,13 +692,13 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                             )}
                           />
                         </DisclosureButton>
-                        <DisclosurePanel className="ml-4 space-y-1">
+                        <DisclosurePanel className="ml-4 space-y-1 max-h-[40vh] overflow-y-auto pr-2 bg-indigo-50 rounded-md py-2 my-2">
                           {item.submenu.map((subItem) => (
                             <Link
                               key={subItem.name}
                               to={subItem.href}
                               onClick={() => setSelectedCategory(subItem.name)}
-                              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white"
+                              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white transition-all"
                             >
                               {subItem.name}
                             </Link>
