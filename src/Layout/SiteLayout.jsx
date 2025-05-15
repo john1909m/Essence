@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// Remove the direct CSS imports that are causing the resolution error
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 import Navbar from '../Components/Navbar/Navbar'
 import { Outlet } from 'react-router-dom'

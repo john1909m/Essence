@@ -18,7 +18,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base:"/",
+  base: "/",
   plugins: [react()],
   
   optimizeDeps: {
@@ -28,13 +28,14 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "slick-carousel/slick/slick.css"; @import "slick-carousel/slick/slick-theme.css";`
+        // Remove the additionalData imports as they're causing issues
       }
     }
   },
   build: {
     rollupOptions: {
-      external: ['slick-carousel/slick/slick.css']
+      // Don't mark CSS as external - this causes the module resolution error
+      external: []
     }
   }
 });
