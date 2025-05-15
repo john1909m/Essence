@@ -10,22 +10,13 @@ const {setCartProducts,cartProducts,setWishProducts,wishProducts}=useOutletConte
 const { showToast } = useToast();
 
   const addCartItem=(item)=>{
-    const existingItem = cartProducts.find(product => product.id === item.id);
-    if (existingItem) {
-      showToast(`${name} is already in your cart`, 'error');
-    } else {
-      setCartProducts(prev => [...prev,item])
-      showToast(`${name} has been added to your cart`, 'success');
-    }
+    setCartProducts(prev => [...prev,item])
+    showToast(`${name} has been added to your cart`, 'success');
   }
+  
   const addWishItem=(item)=>{
-    const existingItem = wishProducts.find(product => product.id === item.id);
-    if (existingItem) {
-      showToast(`${name} is already in your wishlist`, 'error');
-    } else {
-      setWishProducts(prev => [...prev,item])
-      showToast(`${name} has been added to your wishlist`, 'success');
-    }
+    setWishProducts(prev => [...prev,item])
+    showToast(`${name} has been added to your wishlist`, 'success');
   }
 
 useEffect(()=>{
@@ -66,8 +57,6 @@ useEffect(()=>{
             price:price,
             imageSrc:imageSrc
           })
-          console.log("added");
-          
         }}>Add To Cart</button>
         <button
         onClick={()=>{
@@ -77,10 +66,6 @@ useEffect(()=>{
             price:price,
             imageSrc:imageSrc
           })
-
-
-          
-          
         }} className='bg-red-600 w-[20%] p-1 rounded-md flex justify-center items-center h-[5vh] text-[16px] font-semibold text-white hover:bg-red-800 transition-all'>
           <HeartIcon className='h-5 w-5'></HeartIcon>
            </button>

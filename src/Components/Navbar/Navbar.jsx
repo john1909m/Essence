@@ -127,22 +127,17 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
     });
   }
 
-  // Update wishlist to cart operation to show toast
+  // Update wishlist to cart operation to allow duplicates
   const moveToCart = (item) => {
     setCartProducts(prev => {
-      const exists = prev.some(product => product.id === item.id);
-      if (exists) {
-        showToast(`${item.title || item.name} is already in your cart`, 'error');
-        return prev;
-      } else {
-        showToast(`${item.title || item.name} moved to cart`, 'success');
-        return [...prev, {
-          id: item.id,
-          title: item.title || item.name,
-          price: item.price,
-          imageSrc: item.imageSrc,
-        }];
-      }
+      // Always add the item, no duplicate check
+      showToast(`${item.title || item.name} moved to cart`, 'success');
+      return [...prev, {
+        id: item.id,
+        title: item.title || item.name,
+        price: item.price,
+        imageSrc: item.imageSrc,
+      }];
     });
   }
 
