@@ -6,9 +6,12 @@ import './styles/slick.css'
 import { routes } from './utils/routes';
 import { RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
+import { ToastProvider } from './Context/ToastContext';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <RouterProvider router={routes}/>
+    <ToastProvider>
+      <RouterProvider router={routes}/>
+    </ToastProvider>
   </StrictMode>,
 )

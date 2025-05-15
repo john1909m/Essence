@@ -55,6 +55,13 @@ try {
     console.log('Copied images to dist/images directory');
   }
   
+  // Create _redirects file for Netlify to handle client-side routing
+  fs.writeFileSync(
+    path.join(__dirname, 'dist', '_redirects'),
+    `/* /index.html 200`
+  );
+  console.log('Created _redirects file for Netlify');
+  
   console.log('Build completed successfully!');
 } catch (error) {
   console.error('Build failed:', error);

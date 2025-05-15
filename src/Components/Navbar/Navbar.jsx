@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, ChevronDownIcon, HeartIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Button, Dialog, DialogPanel,DialogTitle,DialogBackdrop  } from '@headlessui/react'
+import { useToast } from '../../Context/ToastContext'
 
 
 
@@ -12,6 +13,7 @@ function classNames(...classes) {
 
 
 export default function Navbar({cartProducts,setCartProducts,wishProducts,setWishProducts,setSelectedCategory}) {
+  const { showToast } = useToast();
 
 
 
@@ -111,6 +113,53 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
     })))
   }
 
+  // Update cart removal to show toast
+  const removeFromCart = (product) => {
+    setCartProducts(prev => {
+      const index = prev.findIndex(item => item.id === product.id);
+      if (index !== -1) {
+        const newCart = [...prev];
+        newCart.splice(index, 1);
+        showToast(`${product.title} removed from cart`, 'success');
+        return newCart;
+      }
+      return prev;
+    });
+  }
+
+  // Update wishlist to cart operation to show toast
+  const moveToCart = (item) => {
+    setCartProducts(prev => {
+      const exists = prev.some(product => product.id === item.id);
+      if (exists) {
+        showToast(`${item.title || item.name} is already in your cart`, 'error');
+        return prev;
+      } else {
+        showToast(`${item.title || item.name} moved to cart`, 'success');
+        return [...prev, {
+          id: item.id,
+          title: item.title || item.name,
+          price: item.price,
+          imageSrc: item.imageSrc,
+        }];
+      }
+    });
+  }
+
+  // Update wishlist removal to show toast
+  const removeFromWishlist = (item) => {
+    setWishProducts(prev => {
+      const index = prev.findIndex(product => product.id === item.id);
+      if (index >= 0) {
+        const newWishlist = [...prev];
+        newWishlist.splice(index, 1);
+        showToast(`${item.title || item.name} removed from wishlist`, 'success');
+        return newWishlist;
+      }
+      return prev;
+    });
+  }
+
   return (
 
 <>
@@ -187,13 +236,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                       <button
                                       onClick={()=>{
 
-                                        setCartProducts(prev => [...prev, {
-                                          id: item.id,
-                                          title: item.title,
-                                          price: item.price,
-                                          imageSrc: item.imageSrc,
-                                           
-                                        }]);
+                                        moveToCart(item);
                                       }}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -203,18 +246,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                       <button
                                       onClick={()=>{
 
-                                        localStorage.setItem("wishList",JSON.stringify(wishProducts))
-                                        console.log("removed");
-                                        console.log(localStorage.getItem("wishList"));
-                                        setWishProducts(prev => {
-                                          const index = prev.findIndex(item => item.id === wishlistItems.id);
-                                          if (index >= 0) {
-                                            const newCart = [...prev];
-                                            newCart.splice(index, 1);
-                                            return newCart;
-                                          }
-                                          return prev;
-                                        });
+                                        removeFromWishlist(item);
                                       }}
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -233,16 +265,16 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="mt-6">
-                        <a
-                        onClick={()=>{
-                          setWishlistOpen(false);
-                          openCartModal()
-                        }}
-                          href="#"
+                        <Link
+                          to="#"
+                          onClick={() => {
+                            setWishlistOpen(false);
+                            openCartModal();
+                          }}
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Go To Cart
-                        </a>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
@@ -344,15 +376,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                 <div className="flex">
                                   <button 
                                   onClick={()=>{
-                                    setCartProducts(prev => {
-                                      const index = prev.findIndex(item => item.id === product.id);
-                                      if (index !== -1) {
-                                        const newCart = [...prev];
-                                        newCart.splice(index, 1);
-                                        return newCart;
-                                      }
-                                      return prev;
-                                    });
+                                    removeFromCart(product);
                                   }}
                                    type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                     Remove
@@ -560,17 +584,19 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                           {item.submenu.map((subItem) => (
                             <MenuItem key={subItem.name}>
                               {({ focus }) => (
-                                <a href={subItem.href} onClick={()=>{
-                                  setSelectedCategory(subItem.name)
-                                  console.log(subItem.name);
-                                  
-                                }} className={classNames(
+                                <Link
+                                  to={subItem.href}
+                                  onClick={() => {
+                                    handleItemClick(item);
+                                    setSelectedCategory(subItem.name);
+                                  }}
+                                  className={classNames(
                                     focus ? 'bg-indigo-300 transition-all rounded-sm' : '',
                                     'block px-4 py-2 text-sm text-indigo-800'
                                   )}
                                 >
                                   {subItem.name}
-                                </a>
+                                </Link>
                               )}
                             </MenuItem>
                           ))}
@@ -639,79 +665,81 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
       </div>
 
       {/* Mobile menu */}
-      <Transition
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <DisclosurePanel className="sm:hidden">
-          <div className="space-y-1 px-2 pt-2 pb-3">
-            {navigation.map((item) => (
-              item.submenu ? (
-                <Disclosure key={item.name} as="div" className="space-y-1">
-                  {({ open }) => (
-                    <>
-                      <DisclosureButton
-                        as="button"
-                        onClick={() => handleItemClick(item)}
-                        className={classNames(
-                          item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
-                          'flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium transition-colors duration-200 ease-in-out'
-                        )}
-                      >
-                        {item.name}
-                        <ChevronDownIcon
+      <div className="sm:hidden">
+        <Transition
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <DisclosurePanel className="sm:hidden">
+            <div className="space-y-1 px-2 pt-2 pb-3">
+              {navigation.map((item) => (
+                item.submenu ? (
+                  <Disclosure key={item.name} as="div" className="space-y-1">
+                    {({ open }) => (
+                      <>
+                        <DisclosureButton
+                          as="button"
+                          onClick={() => handleItemClick(item)}
                           className={classNames(
-                            open ? 'rotate-180' : '',
-                            'ml-1 h-4 w-4 transition-transform duration-200'
+                            item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
+                            'flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium transition-colors duration-200 ease-in-out'
                           )}
-                        />
-                      </DisclosureButton>
-                      <DisclosurePanel className="ml-4 space-y-1">
-                        {item.submenu.map((subItem) => (
-                          <DisclosureButton
-                            key={subItem.name}
-                            as="a"
-                            href={subItem.href}
-                            className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white"
-                          >
-                            {subItem.name}
-                          </DisclosureButton>
-                        ))}
-                      </DisclosurePanel>
-                    </>
-                  )}
-                </Disclosure>
-              ) : (
-                <DisclosureButton
-                  key={item.name}
-                  as="button"
-                  onClick={() => handleItemClick(item)}
-                  aria-current={item.current ? 'page' : undefined}
-                  className={classNames(
-                    item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ease-in-out'
-                  )}
-                >
-                  {item.name}
-                </DisclosureButton>
-              )
-            ))}
-            
-            {/* Mobile login button - shown only in mobile menu */}
-            <DisclosureButton
-              as="button" 
-              onClick={openLoginModal}
-              className="block w-full rounded-md bg-indigo-600 px-3 py-2 text-base font-medium text-white hover:bg-indigo-700 text-left sm:hidden"
-            >
-              Login
-            </DisclosureButton>
-          </div>
-        </DisclosurePanel>
-      </Transition>
+                        >
+                          {item.name}
+                          <ChevronDownIcon
+                            className={classNames(
+                              open ? 'rotate-180' : '',
+                              'ml-1 h-4 w-4 transition-transform duration-200'
+                            )}
+                          />
+                        </DisclosureButton>
+                        <DisclosurePanel className="ml-4 space-y-1">
+                          {item.submenu.map((subItem) => (
+                            <Link
+                              key={subItem.name}
+                              to={subItem.href}
+                              onClick={() => setSelectedCategory(subItem.name)}
+                              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white"
+                            >
+                              {subItem.name}
+                            </Link>
+                          ))}
+                        </DisclosurePanel>
+                      </>
+                    )}
+                  </Disclosure>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => handleItemClick(item)}
+                    aria-current={item.current ? 'page' : undefined}
+                    className={classNames(
+                      item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
+                      'block rounded-md px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ease-in-out'
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
+              
+              {/* Mobile login button - shown only in mobile menu */}
+              <DisclosureButton
+                as="button" 
+                onClick={openLoginModal}
+                className="block w-full rounded-md bg-indigo-600 px-3 py-2 text-base font-medium text-white hover:bg-indigo-700 text-left sm:hidden"
+              >
+                Login
+              </DisclosureButton>
+            </div>
+          </DisclosurePanel>
+        </Transition>
+      </div>
     </Disclosure>
 
 

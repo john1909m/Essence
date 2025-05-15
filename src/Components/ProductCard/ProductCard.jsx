@@ -2,15 +2,30 @@ import React, { useEffect } from 'react';
 import { useOutletContext } from "react-router-dom";
 // import { useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
+import { useToast } from '../../Context/ToastContext';
 
 
 export default function ProductCard({name,id, href, imageAlt, imageSrc, price, category}) {
 const {setCartProducts,cartProducts,setWishProducts,wishProducts}=useOutletContext()
+const { showToast } = useToast();
+
   const addCartItem=(item)=>{
-    setCartProducts(prev => [...prev,item])
+    const existingItem = cartProducts.find(product => product.id === item.id);
+    if (existingItem) {
+      showToast(`${name} is already in your cart`, 'error');
+    } else {
+      setCartProducts(prev => [...prev,item])
+      showToast(`${name} has been added to your cart`, 'success');
+    }
   }
   const addWishItem=(item)=>{
-    setWishProducts(prev => [...prev,item])
+    const existingItem = wishProducts.find(product => product.id === item.id);
+    if (existingItem) {
+      showToast(`${name} is already in your wishlist`, 'error');
+    } else {
+      setWishProducts(prev => [...prev,item])
+      showToast(`${name} has been added to your wishlist`, 'success');
+    }
   }
 
 useEffect(()=>{
