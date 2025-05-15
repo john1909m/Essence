@@ -15,13 +15,14 @@ export const routes = createBrowserRouter([
       children:[
         {path:"/" , Component:App},
         {path:"about",Component:About},
-        {path:"/contact",Component:Contact},
-        {path:"/products/:all-products",Component:Products},
-        {path:"/checkout",Component:PaymentPage,
+        {path:"contact",Component:Contact},
+        {path:"products/:all-products",Component:Products},
+        {path:"checkout",Component:PaymentPage,
           loader: ({ context }) => {
           return { cartProducts: context.cartProducts }}
         },
-
-        
       ]}
-  ])
+  ], {
+    // This ensures the router works with Netlify's routing
+    basename: "/"
+  })

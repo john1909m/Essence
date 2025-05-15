@@ -1,0 +1,13 @@
+# Netlify configuration file
+
+# This ensures all routes are handled by the single page application
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Set cache headers for images
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable" 

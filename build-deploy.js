@@ -24,10 +24,37 @@ if (!fs.existsSync(slickCssPath)) {
   console.log('Created slick.css file');
 }
 
-// Step 3: Run the standard build command
+// Step 3: Ensure images directory exists in public folder
+const publicImagesDir = path.join(__dirname, 'public', 'images');
+if (!fs.existsSync(publicImagesDir)) {
+  fs.mkdirSync(publicImagesDir, { recursive: true });
+  console.log('Created public/images directory');
+}
+
+// Step 4: Copy images from /public/images to /dist/images in build
 console.log('Running vite build...');
 try {
   execSync('npm run build', { stdio: 'inherit' });
+  
+  // After build, ensure images are in the right place
+  const distImagesDir = path.join(__dirname, 'dist', 'images');
+  if (!fs.existsSync(distImagesDir)) {
+    fs.mkdirSync(distImagesDir, { recursive: true });
+  }
+  
+  // Copy all files from public/images to dist/images
+  if (fs.existsSync(publicImagesDir)) {
+    const imageFiles = fs.readdirSync(publicImagesDir);
+    for (const file of imageFiles) {
+      const sourcePath = path.join(publicImagesDir, file);
+      const destPath = path.join(distImagesDir, file);
+      if (fs.statSync(sourcePath).isFile()) {
+        fs.copyFileSync(sourcePath, destPath);
+      }
+    }
+    console.log('Copied images to dist/images directory');
+  }
+  
   console.log('Build completed successfully!');
 } catch (error) {
   console.error('Build failed:', error);
