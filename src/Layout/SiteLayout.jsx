@@ -6,8 +6,10 @@ import React, { useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar'
 import { Outlet } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
-
+import ThemeToggle from '../Components/ThemeToggle/ThemeToggle'
 import Footer from '../Components/Footer/Footer'
+import { useTheme } from '../Context/ThemeContext'
+
 export default function SiteLayout() {
   const location=useLocation()
   const urlSplit=location.pathname.split(["/:",])
@@ -16,14 +18,17 @@ export default function SiteLayout() {
   const [selectedCategory, setSelectedCategory] = useState(category);
   const [cartProducts,setCartProducts]=useState([])
   const [wishProducts,setWishProducts]=useState([])
-
+  const { darkMode } = useTheme();
 
   return (
 <>
-    <Navbar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} catParams={catParams} setCatParams={setCatParams} cartProducts={cartProducts} setCartProducts={setCartProducts} wishProducts={wishProducts} setWishProducts={setWishProducts}></Navbar>
-    <div className='h-[7vh]'></div>
-    <Outlet context={{selectedCategory,setSelectedCategory,cartProducts,setCartProducts,wishProducts,setWishProducts}}></Outlet>
-    <Footer></Footer>
+    <div className={`dark:bg-dark-bg dark:bg-gradient-to-br dark:from-dark-bg dark:via-dark-surface dark:to-dark-bg dark:text-dark-text min-h-screen transition-colors duration-300 ease-in-out ${darkMode ? 'bg-pattern' : ''}`}>
+      <Navbar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} catParams={catParams} setCatParams={setCatParams} cartProducts={cartProducts} setCartProducts={setCartProducts} wishProducts={wishProducts} setWishProducts={setWishProducts}></Navbar>
+      <div className='h-[7vh]'></div>
+      <Outlet context={{selectedCategory,setSelectedCategory,cartProducts,setCartProducts,wishProducts,setWishProducts}}></Outlet>
+      <Footer></Footer>
+      <ThemeToggle />
+    </div>
 </>
   )
 }

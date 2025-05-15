@@ -442,7 +442,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
         </Transition.Child>
 
 
@@ -450,22 +450,22 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
+            enterFrom="opacity-0 scale-95 -translate-y-10"
+            enterTo="opacity-100 scale-100 translate-y-0"
             leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            leaveFrom="opacity-100 scale-100 translate-y-0"
+            leaveTo="opacity-0 scale-95 translate-y-10"
           >
-            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white p-12 rounded-xl shadow-xl">
-              <p className='text-center font-bold text-[30px] underline'>Login</p>
+            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white dark:bg-dark-surface dark:text-dark-text p-12 rounded-xl shadow-xl transform transition-all">
+              <p className='text-center font-bold text-[30px] underline dark:text-dark-primary'>Login</p>
               <form onSubmit={(e)=>{e.preventDefault}} action="" className='flex flex-col'>
-                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2' />
-                <p className='text-center mt-2'>Don't have an account? <a className='text-indigo-600 cursor-pointer' onClick={()=>{
+                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
+                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2' />
+                <p className='text-center mt-2 dark:text-dark-text-secondary'>Don't have an account? <a className='text-indigo-600 dark:text-dark-primary cursor-pointer' onClick={()=>{
                   closeLoginModal();
                   openRegisterModal();
                 }}>Register</a></p>
-                <button className='w-full bg-indigo-600 h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 transition-all hover:scale-105' type='submit'>Login</button>
+                <button className='w-full bg-indigo-600 dark:bg-dark-primary h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 dark:hover:bg-dark-primary-hover transition-all hover:scale-105' type='submit'>Login</button>
               </form>
             </Dialog.Panel>
           </Transition.Child>
@@ -488,7 +488,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
         </Transition.Child>
 
 
@@ -496,26 +496,26 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
+            enterFrom="opacity-0 scale-95 -translate-y-10"
+            enterTo="opacity-100 scale-100 translate-y-0"
             leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            leaveFrom="opacity-100 scale-100 translate-y-0"
+            leaveTo="opacity-0 scale-95 translate-y-10"
           >
-            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white p-12 rounded-xl shadow-xl">
-              <p className='text-center font-bold text-[30px] underline'>Register</p>
+            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white dark:bg-dark-surface dark:text-dark-text p-12 rounded-xl shadow-xl transform transition-all">
+              <p className='text-center font-bold text-[30px] underline dark:text-dark-primary'>Register</p>
               <form onSubmit={(e)=>{e.preventDefault}} action="" className='flex flex-col'>
-              <input type="text" htmlFor="name" name='name' placeholder='Full Name' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2 mb-3' />
-              <input type="number" htmlFor="number" name='number' placeholder='Phone Number' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2 mb-3' />
+              <input type="text" htmlFor="name" name='name' placeholder='Full Name' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
+              <input type="number" htmlFor="number" name='number' placeholder='Phone Number' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
 
-                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="ConfirmPassword" name='ConfirmPassword' placeholder='ConfirmPassword' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 mb-3 rounded-md h-[7vh] pl-2' />
-                <p className='text-center mt-2'>Have an account? <a className='text-indigo-600 cursor-pointer'  onClick={()=>{
+                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
+                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
+                <input type="Password" htmlFor="ConfirmPassword" name='ConfirmPassword' placeholder='ConfirmPassword' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text mb-3 rounded-md h-[7vh] pl-2' />
+                <p className='text-center mt-2 dark:text-dark-text-secondary'>Have an account? <a className='text-indigo-600 dark:text-dark-primary cursor-pointer'  onClick={()=>{
                   openLoginModal();
                   closeRegisterModal();
                 }}>Login</a></p>
-                <button className='w-full bg-indigo-600 h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 transition-all hover:scale-105' type='submit'>Register</button>
+                <button className='w-full bg-indigo-600 dark:bg-dark-primary h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 dark:hover:bg-dark-primary-hover transition-all hover:scale-105' type='submit'>Register</button>
               </form>
             </Dialog.Panel>
           </Transition.Child>
@@ -529,12 +529,12 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
 {/* -------------------NavBar-------------------------- */}
 
-    <Disclosure as="nav" className="bg-indigo-100 shadow-lg fixed z-20 w-full">
+    <Disclosure as="nav" className="bg-indigo-100 dark:bg-dark-surface border-b border-transparent dark:border-dark-border shadow-xl fixed z-20 w-full backdrop-blur-sm dark:backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-indigo-600 hover:bg-indigo-700 transition-all hover:text-white focus:ring-2 focus:ring-indigo focus:outline-hidden focus:ring-inset">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-indigo-600 dark:text-dark-primary hover:bg-indigo-700 dark:hover:bg-dark-primary transition-all hover:text-white focus:ring-2 focus:ring-indigo focus:outline-hidden focus:ring-inset">
               <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
               <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
             </DisclosureButton>
@@ -546,26 +546,26 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
               <img
                 alt="Your Company"
                 src="/images/logo.png.webp"
-                className="h-5 w-auto"
+                className="h-5 w-auto dark:invert dark:brightness-[0.85] dark:contrast-[1.15]"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
+                {navigation.map((item) => 
                   item.submenu ? (
                     <Menu as="div" key={item.name} className="relative">
-                      
                       <MenuButton
                         onClick={() => handleItemClick(item) }
                         className={classNames(
-                          item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
+                          item.current 
+                            ? 'bg-indigo-700 text-white' 
+                            : 'text-indigo-800 dark:text-dark-text hover:bg-indigo-600 hover:text-white dark:hover:bg-dark-primary-hover',
                           'rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out flex items-center'
                         )}
                       >
                         {item.name}
                         <ChevronDownIcon className="ml-1 h-4 w-4" />
                       </MenuButton>
-                      {/* </Link> */}
 
                       <Transition
                         enter="transition ease-out duration-100"
@@ -575,7 +575,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] max-h-[60vh] overflow-y-auto origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-indigo-700 focus:outline-hidden">
+                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] max-h-[60vh] overflow-y-auto origin-top-left rounded-md bg-white dark:bg-dark-surface-secondary py-1 shadow-lg ring-1 ring-indigo-700 dark:ring-dark-border focus:outline-hidden">
                           {item.submenu.map((subItem) => (
                             <MenuItem key={subItem.name}>
                               {({ focus }) => (
@@ -586,8 +586,10 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                     setSelectedCategory(subItem.name);
                                   }}
                                   className={classNames(
-                                    focus ? 'bg-indigo-300 transition-all rounded-sm' : '',
-                                    'block px-4 py-2 text-sm text-indigo-800'
+                                    focus 
+                                      ? 'bg-indigo-300 dark:bg-dark-primary/30 transition-all rounded-sm' 
+                                      : '',
+                                    'block px-4 py-2 text-sm text-indigo-800 dark:text-dark-text hover:bg-indigo-100 dark:hover:bg-dark-primary/20'
                                   )}
                                 >
                                   {subItem.name}
@@ -599,19 +601,20 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                       </Transition>
                     </Menu>
                   ) : (
-                  <Link to={item.href}> <button
+                    <Link
                       key={item.name}
+                      to={item.href}
                       onClick={() => handleItemClick(item)}
                       aria-current={item.current ? 'page' : undefined}
                       className={classNames(
-                        item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
+                        item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 dark:text-gray-300 hover:bg-indigo-600 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out'
                       )}
                     >
                       {item.name}
-                    </button></Link>
+                    </Link>
                   )
-                ))}
+                )}
               </div>
             </div>
           </div>
@@ -680,7 +683,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                           as="button"
                           onClick={() => handleItemClick(item)}
                           className={classNames(
-                            item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
+                            item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 dark:text-gray-300 hover:bg-indigo-600 hover:text-white',
                             'flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium transition-colors duration-200 ease-in-out'
                           )}
                         >
@@ -698,7 +701,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                               key={subItem.name}
                               to={subItem.href}
                               onClick={() => setSelectedCategory(subItem.name)}
-                              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white transition-all"
+                              className="block rounded-md px-3 py-2 text-base font-medium text-indigo-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white transition-all"
                             >
                               {subItem.name}
                             </Link>
@@ -714,8 +717,8 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                     onClick={() => handleItemClick(item)}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 hover:bg-indigo-600 hover:text-white',
-                      'block rounded-md px-3 py-2 text-base font-medium w-full text-left transition-colors duration-200 ease-in-out'
+                      item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 dark:text-gray-300 hover:bg-indigo-600 hover:text-white',
+                      'flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium transition-colors duration-200 ease-in-out'
                     )}
                   >
                     {item.name}

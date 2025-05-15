@@ -2,9 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global styles */
+:root {
+  --transition-duration: 300ms;
+}
 
-body,html{
-    overflow-x: hidden;
+/* Base dark mode styles applied to html element */
+.dark {
+  color-scheme: dark;
+}
+
+/* Dark mode transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+  transition-duration: var(--transition-duration);
+  transition-timing-function: ease-in-out;
+}
+
+body, html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Apply dark background to root elements */
+.dark body {
+  background-color: theme('colors.dark-bg');
+  color: theme('colors.dark-text');
+}
+
+/* Force white backgrounds to be dark in dark mode */
+.dark div[class*="bg-white"],
+.dark nav[class*="bg-white"],
+.dark section[class*="bg-white"],
+.dark header[class*="bg-white"],
+.dark footer[class*="bg-white"],
+.dark aside[class*="bg-white"],
+.dark main[class*="bg-white"],
+.dark article[class*="bg-white"] {
+  background-color: theme('colors.dark-surface') !important;
+  color: theme('colors.dark-text') !important;
+}
+
+/* Dark mode scrollbar styling */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: theme('colors.dark-surface');
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: theme('colors.dark-primary');
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.dark-primary-hover');
+}
+
+/* Custom selection color for dark mode */
+.dark ::selection {
+  background-color: rgba(129, 140, 248, 0.3);
+  color: theme('colors.dark-text');
+}
+
+/* Button styles in dark mode */
+.dark button[class*="bg-indigo-600"],
+.dark a[class*="bg-indigo-600"] {
+  background-color: theme('colors.dark-primary') !important;
+}
+
+.dark button[class*="bg-indigo-600"]:hover,
+.dark a[class*="bg-indigo-600"]:hover {
+  background-color: theme('colors.dark-primary-hover') !important;
+}
+
+/* Tailwind doesn't handle transition well for transforms, using a utility class */
+.hover-lift {
+  transition: transform 200ms ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Card styling for dark mode */
+.dark .card, 
+.dark [class*="shadow"],
+.dark [class*="border"] {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Apply gradient backgrounds to certain elements */
+.dark .bg-gradient {
+  background-image: theme('backgroundImage.dark-gradient') !important;
+}
+
+/* Subtle dark mode pattern background */
+.dark .bg-pattern {
+  background-color: #0f172a;
+  background-image: 
+    radial-gradient(#3b82f630 1px, transparent 1px),
+    radial-gradient(#3b82f620 1px, #0f172a 1px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  background-attachment: fixed;
 }
 
 
