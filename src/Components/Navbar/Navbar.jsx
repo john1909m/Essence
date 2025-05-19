@@ -1,9 +1,12 @@
-import React, { useState , Fragment, useEffect } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, ChevronDownIcon, HeartIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Button, Dialog, DialogPanel,DialogTitle,DialogBackdrop  } from '@headlessui/react'
 import { useToast } from '../../Context/ToastContext'
+import { useAuth } from '../../Context/AuthContext'
+import Login from '../Auth/Login'
+import Register from '../Auth/Register'
 
 
 
@@ -14,6 +17,9 @@ function classNames(...classes) {
 
 export default function Navbar({cartProducts,setCartProducts,wishProducts,setWishProducts,setSelectedCategory}) {
   const { showToast } = useToast();
+  const { user, isAuthenticated, logout } = useAuth();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
 
 
@@ -95,16 +101,24 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
     setCartOpen(true)
   }
   function openLoginModal() {
-    setIsOpen(true)
+    setIsLoginOpen(true);
   }
   function closeLoginModal() {
-    setIsOpen(false)
+    setIsLoginOpen(false);
   }
   function openRegisterModal() {
-    setRegIsOpen(true)
+    setIsRegisterOpen(true);
   }
   function closeRegisterModal() {
-    setRegIsOpen(false)
+    setIsRegisterOpen(false);
+  }
+  function switchToLogin() {
+    setIsRegisterOpen(false);
+    setIsLoginOpen(true);
+  }
+  function switchToRegister() {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(true);
   }
   const handleItemClick = (clickedItem) => {
     setNavigation(navigation.map(item => ({
@@ -154,6 +168,11 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
       return prev;
     });
   }
+
+  const handleLogout = () => {
+    logout();
+    showToast('Successfully logged out!', 'success');
+  };
 
   return (
 
@@ -431,54 +450,49 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
 {/* -------------------Login Modal-------------------------- */}
 
-<Transition show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-30" onClose={closeLoginModal}>
+<Transition show={isLoginOpen} as={Fragment}>
+  <Dialog as="div" className="relative z-50" onClose={() => setIsLoginOpen(false)}>
+    <Transition.Child
+      as={Fragment}
+      enter="ease-out duration-300"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="ease-in duration-200"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+    </Transition.Child>
+
+    <div className="fixed inset-0 z-10 overflow-y-auto">
+      <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          enterTo="opacity-100 translate-y-0 sm:scale-100"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
+          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+            <Login onClose={() => setIsLoginOpen(false)} onSwitchToRegister={() => {
+              setIsLoginOpen(false);
+              setIsRegisterOpen(true);
+            }} />
+          </Dialog.Panel>
         </Transition.Child>
-
-
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95 -translate-y-10"
-            enterTo="opacity-100 scale-100 translate-y-0"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100 translate-y-0"
-            leaveTo="opacity-0 scale-95 translate-y-10"
-          >
-            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white dark:bg-dark-surface dark:text-dark-text p-12 rounded-xl shadow-xl transform transition-all">
-              <p className='text-center font-bold text-[30px] underline dark:text-dark-primary'>Login</p>
-              <form onSubmit={(e)=>{e.preventDefault}} action="" className='flex flex-col'>
-                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2' />
-                <p className='text-center mt-2 dark:text-dark-text-secondary'>Don't have an account? <a className='text-indigo-600 dark:text-dark-primary cursor-pointer' onClick={()=>{
-                  closeLoginModal();
-                  openRegisterModal();
-                }}>Register</a></p>
-                <button className='w-full bg-indigo-600 dark:bg-dark-primary h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 dark:hover:bg-dark-primary-hover transition-all hover:scale-105' type='submit'>Login</button>
-              </form>
-            </Dialog.Panel>
-          </Transition.Child>
-        </div>
-      </Dialog>
-    </Transition>
+      </div>
+    </div>
+  </Dialog>
+</Transition>
 
 
 
 {/* -------------------Register Modal-------------------------- */}
 
-    <Transition show={RegIsOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-30" onClose={closeRegisterModal}>
+    <Transition show={isRegisterOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={() => setIsRegisterOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -488,37 +502,29 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
 
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95 -translate-y-10"
-            enterTo="opacity-100 scale-100 translate-y-0"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100 translate-y-0"
-            leaveTo="opacity-0 scale-95 translate-y-10"
-          >
-            <Dialog.Panel className="max-w-lg w-full space-y-4 bg-white dark:bg-dark-surface dark:text-dark-text p-12 rounded-xl shadow-xl transform transition-all">
-              <p className='text-center font-bold text-[30px] underline dark:text-dark-primary'>Register</p>
-              <form onSubmit={(e)=>{e.preventDefault}} action="" className='flex flex-col'>
-              <input type="text" htmlFor="name" name='name' placeholder='Full Name' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
-              <input type="number" htmlFor="number" name='number' placeholder='Phone Number' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
-
-                <input type="email" htmlFor="email" name='email' placeholder='Email Address' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="Password" name='Password' placeholder='Password' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text rounded-md h-[7vh] pl-2 mb-3' />
-                <input type="Password" htmlFor="ConfirmPassword" name='ConfirmPassword' placeholder='ConfirmPassword' className='border-b-2 focus:outline-none focus:-translate-y-1 transition-all border-indigo-700 dark:border-dark-primary dark:bg-dark-input dark:text-dark-text mb-3 rounded-md h-[7vh] pl-2' />
-                <p className='text-center mt-2 dark:text-dark-text-secondary'>Have an account? <a className='text-indigo-600 dark:text-dark-primary cursor-pointer'  onClick={()=>{
-                  openLoginModal();
-                  closeRegisterModal();
-                }}>Login</a></p>
-                <button className='w-full bg-indigo-600 dark:bg-dark-primary h-[8vh] mt-2 rounded-md text-white font-semibold text-[20px] hover:bg-indigo-800 dark:hover:bg-dark-primary-hover transition-all hover:scale-105' type='submit'>Register</button>
-              </form>
-            </Dialog.Panel>
-          </Transition.Child>
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                <Register onClose={() => setIsRegisterOpen(false)} onSwitchToLogin={() => {
+                  setIsRegisterOpen(false);
+                  setIsLoginOpen(true);
+                }} />
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
         </div>
       </Dialog>
     </Transition>
@@ -643,21 +649,33 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
               <ShoppingBagIcon className="size-6" />
             </button>
 
-            {/* Login button - hidden on tablet and below (md breakpoint) */}
-            <button
-            onClick={openLoginModal}
-              className="hidden md:block rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
-            >
-              Login
-            </button>
-
-            {/* Register button - hidden on tablet and below (md breakpoint) */}
-            <button
-            onClick={openRegisterModal}
-              className="hidden md:block rounded-md bg-indigo-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-800 transition-colors"
-            >
-              Register
-            </button>
+            {/* Auth buttons */}
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <span className="text-indigo-800 dark:text-gray-300">Welcome, {user.fullName}</span>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => setIsLoginOpen(true)}
+                  className="hidden md:block rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setIsRegisterOpen(true)}
+                  className="hidden md:block rounded-md bg-indigo-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-800 transition-colors"
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -727,13 +745,22 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
               ))}
               
               {/* Mobile login button - shown only in mobile menu */}
-              <DisclosureButton
-                as="button" 
-                onClick={openLoginModal}
-                className="block w-full rounded-md bg-indigo-600 px-3 py-2 text-base font-medium text-white hover:bg-indigo-700 text-left sm:hidden"
-              >
-                Login
-              </DisclosureButton>
+              {!isAuthenticated && (
+                <div className="space-y-2 pt-2">
+                  <button
+                    onClick={() => setIsLoginOpen(true)}
+                    className="block w-full rounded-md bg-indigo-600 px-3 py-2 text-base font-medium text-white hover:bg-indigo-700"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => setIsRegisterOpen(true)}
+                    className="block w-full rounded-md bg-indigo-900 px-3 py-2 text-base font-medium text-white hover:bg-indigo-800"
+                  >
+                    Register
+                  </button>
+                </div>
+              )}
             </div>
           </DisclosurePanel>
         </Transition>

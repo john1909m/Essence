@@ -6,6 +6,7 @@ import PaymentPage from "../Pages/Payment/Payment";
 // import About from "../Pages/About";
 import Contact from "../Pages/Contact/Contact";
 import Products from "../Pages/Products/Products";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 // import Products from "../Pages/Products";
 // import ProductDetails from "../components/ProductDetails/ProductDetails";
 
@@ -17,6 +18,7 @@ export const routes = createBrowserRouter([
         {path:"about",Component:About},
         {path:"contact",Component:Contact},
         {path:"products/:all-products",Component:Products},
+        {path:"product/:id",Component:ProductDetails},
         {path:"checkout",Component:PaymentPage,
           loader: ({ context }) => {
           return { cartProducts: context.cartProducts }}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link } from "react-router-dom";
 // import { useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { useToast } from '../../Context/ToastContext';
@@ -29,46 +29,57 @@ useEffect(()=>{
   // console.log(cartProducts);
   
   return (
-    <div className="group relative dark:bg-dark-surface rounded-md">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-indigo-50 dark:bg-dark-card lg:aspect-none group-hover:opacity-75 lg:h-80">
-        <img
-          alt={imageAlt}
-          src={imageSrc}
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
-      <div className="mt-4 flex justify-between">
-        <div>
-          <h3 className="text-lg text-gray-700 dark:text-white">
-            <a href={href} className='font-bold'>
-              {name}
-            </a>
-          </h3>
-          <p className="mt-1 text-md text-gray-500 dark:text-gray-300">{category}</p>
-        </div>
-        <p className="text-lg font-medium text-gray-900 dark:text-indigo-300">${price}</p>
-      </div>
-      <div className="btns flex justify-between gap-1 mt-3">
-        <button className='bg-indigo-600 p-1 w-full rounded-md h-[5vh] text-[16px] font-semibold text-white hover:bg-indigo-800 transition-all' onClick={()=>{
-          addCartItem({
-            id:id,
-            title:name,
-            price:price,
-            imageSrc:imageSrc
-          })
-          console.log("added");
-          
-        }}>Add To Cart</button>
+    <div className="group relative bg-white dark:bg-dark-surface rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div className="relative aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-t-2xl bg-gray-100 dark:bg-dark-card">
+        <Link to={`/product/${id}`} className="block">
+          <img
+            alt={imageAlt}
+            src={imageSrc}
+            className="h-full w-full object-cover object-center transform group-hover:scale-110 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </Link>
         <button
-        onClick={()=>{
-          addWishItem({
-            id:id,
-            title:name,
-            price:price,
-            imageSrc:imageSrc
-          })
-        }} className='bg-red-600 w-[20%] p-1 rounded-md flex justify-center items-center h-[5vh] text-[16px] font-semibold text-white hover:bg-red-800 transition-all'>
-          <HeartIcon className='h-5 w-5'></HeartIcon>
+          onClick={() => {
+            addWishItem({
+              id: id,
+              title: name,
+              price: price,
+              imageSrc: imageSrc
+            });
+          }}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm shadow-lg hover:shadow-xl text-red-500 hover:text-red-600 transition-all duration-300 transform hover:scale-110 focus:outline-none"
+          aria-label="Add to wishlist"
+        >
+          <HeartIcon className="h-5 w-5" />
+        </button>
+      </div>
+
+      <div className="p-6">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <Link to={`/product/${id}`} className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                {name}
+              </Link>
+            </h3>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 capitalize">{category}</p>
+          </div>
+          <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400">${price}</p>
+        </div>
+
+        <button
+          onClick={() => {
+            addCartItem({
+              id: id,
+              title: name,
+              price: price,
+              imageSrc: imageSrc
+            });
+          }}
+          className="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-medium shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-[1.02] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          Add to Cart
         </button>
       </div>
     </div>

@@ -177,6 +177,7 @@ export default function Products() {
                   <div key={product.id} className="px-2">
                     <ProductCard
                       name={product.title}
+                      id={product.id}
                       href={`/product/${product.id}`}  // Added proper product link
                       price={product.price}
                       category={product.category}

@@ -8,12 +8,15 @@ import { RouterProvider } from 'react-router-dom';
 import App from './App.jsx'
 import { ToastProvider } from './Context/ToastContext';
 import { ThemeProvider } from './Context/ThemeContext';
+import { AuthProvider } from './Context/AuthContext';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider>
       <ToastProvider>
-        <RouterProvider router={routes}/>
+        <AuthProvider>
+          <RouterProvider router={routes}/>
+        </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
   </StrictMode>,
