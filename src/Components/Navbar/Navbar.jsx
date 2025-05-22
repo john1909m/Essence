@@ -189,7 +189,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500/75" />
+          <div className="fixed inset-0 bg-gray-500/75 backdrop-blur-sm" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
@@ -204,16 +204,16 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-md bg-white shadow-xl">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md bg-white dark:bg-dark-surface-secondary shadow-2xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-white dark:bg-dark-surface-secondary shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">Your Wishlist</Dialog.Title>
+                        <Dialog.Title className="text-lg font-semibold text-gray-900 dark:text-dark-text">Your Wishlist</Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
                             onClick={() => setWishlistOpen(false)}
-                            className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                            className="relative -m-2 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 transition-colors"
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Close panel</span>
@@ -224,10 +224,10 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
                       <div className="mt-8">
                         <div className="flow-root">
-                          <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          <ul role="list" className="-my-6 divide-y divide-gray-200 dark:divide-dark-border">
                             {wishlistItems.map((item) => (
                               <li key={item.id} className="flex py-6">
-                                <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                <div className="size-24 shrink-0 overflow-hidden rounded-xl border border-gray-200 dark:border-dark-border">
                                   <img
                                     src={item.imageSrc}
                                     alt={item.imageAlt}
@@ -237,33 +237,26 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
                                 <div className="ml-4 flex flex-1 flex-col">
                                   <div>
-                                    <div className="flex justify-between text-base font-medium text-gray-900">
+                                    <div className="flex justify-between text-base font-medium text-gray-900 dark:text-dark-text">
                                       <h3>
-                                        <a href={item.href}>{item.name || item.title}</a>
+                                        <a href={item.href} className="hover:text-indigo-600 dark:hover:text-dark-primary transition-colors">{item.name || item.title}</a>
                                       </h3>
-                                      <p className="ml-4">${item.price}</p>
+                                      <p className="ml-4 text-indigo-600 dark:text-dark-primary">${item.price}</p>
                                     </div>
-                                    
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <div className="flex space-x-4">
                                       <button
-                                      onClick={()=>{
-
-                                        moveToCart(item);
-                                      }}
+                                        onClick={() => moveToCart(item)}
                                         type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        className="font-medium text-indigo-600 dark:text-dark-primary hover:text-indigo-500 dark:hover:text-dark-primary-hover transition-colors"
                                       >
                                         Move to Cart
                                       </button>
                                       <button
-                                      onClick={()=>{
-
-                                        removeFromWishlist(item);
-                                      }}
+                                        onClick={() => removeFromWishlist(item)}
                                         type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        className="font-medium text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 transition-colors"
                                       >
                                         Remove
                                       </button>
@@ -277,7 +270,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                       </div>
                     </div>
 
-                    <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                    <div className="border-t border-gray-200 dark:border-dark-border px-4 py-6 sm:px-6">
                       <div className="mt-6">
                         <Link
                           to="#"
@@ -285,18 +278,18 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                             setWishlistOpen(false);
                             openCartModal();
                           }}
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                          className="flex items-center justify-center rounded-xl border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200"
                         >
                           Go To Cart
                         </Link>
                       </div>
-                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-400">
                         <p>
                           or{' '}
                           <button
                             type="button"
                             onClick={() => setWishlistOpen(false)}
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                            className="font-medium text-indigo-600 dark:text-dark-primary hover:text-indigo-500 dark:hover:text-dark-primary-hover transition-colors"
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
@@ -329,7 +322,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="fixed inset-0 bg-gray-500/75" />
+      <div className="fixed inset-0 bg-gray-500/75 backdrop-blur-sm" />
     </Transition.Child>
 
     <div className="fixed inset-0 overflow-hidden">
@@ -344,19 +337,16 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="pointer-events-auto w-screen max-w-md bg-white shadow-xl"
-            transition
-              
-            >
-              <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+            <Dialog.Panel className="pointer-events-auto w-screen max-w-md bg-white dark:bg-dark-surface-secondary shadow-2xl">
+              <div className="flex h-full flex-col overflow-y-scroll bg-white dark:bg-dark-surface-secondary shadow-xl">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                   <div className="flex items-start justify-between">
-                    <DialogTitle className="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
+                    <Dialog.Title className="text-lg font-semibold text-gray-900 dark:text-dark-text">Shopping cart</Dialog.Title>
                     <div className="ml-3 flex h-7 items-center">
                       <button
                         type="button"
                         onClick={() => setCartOpen(false)}
-                        className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                        className="relative -m-2 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 transition-colors"
                       >
                         <span className="absolute -inset-0.5" />
                         <span className="sr-only">Close panel</span>
@@ -367,32 +357,30 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
                   <div className="mt-8">
                     <div className="flow-root">
-                      <ul role="list" className="-my-6 divide-y divide-gray-200">
+                      <ul role="list" className="-my-6 divide-y divide-gray-200 dark:divide-dark-border">
                         {products.map((product) => (
                           <li key={product.id} className="flex py-6">
-                            <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                            <div className="size-24 shrink-0 overflow-hidden rounded-xl border border-gray-200 dark:border-dark-border">
                               <img alt={product.imageAlt} src={product.imageSrc} className="size-full object-cover" />
                             </div>
 
                             <div className="ml-4 flex flex-1 flex-col">
                               <div>
-                                <div className="flex justify-between text-base font-medium text-gray-900">
+                                <div className="flex justify-between text-base font-medium text-gray-900 dark:text-dark-text">
                                   <h3>
-                                    <a href={product.href}>{product.title}</a>
+                                    <a href={product.href} className="hover:text-indigo-600 dark:hover:text-dark-primary transition-colors">{product.title}</a>
                                   </h3>
-                                  <p className="ml-4">${product.price}</p>
+                                  <p className="ml-4 text-indigo-600 dark:text-dark-primary">${product.price}</p>
                                 </div>
-                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{product.color}</p>
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
-                                
-
                                 <div className="flex">
                                   <button 
-                                  onClick={()=>{
-                                    removeFromCart(product);
-                                  }}
-                                   type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                    onClick={() => removeFromCart(product)}
+                                    type="button" 
+                                    className="font-medium text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300 transition-colors"
+                                  >
                                     Remove
                                   </button>
                                 </div>
@@ -405,31 +393,28 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                   </div>
                 </div>
 
-                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                  <div className="flex justify-between text-base font-medium text-gray-900">
+                <div className="border-t border-gray-200 dark:border-dark-border px-4 py-6 sm:px-6">
+                  <div className="flex justify-between text-base font-medium text-gray-900 dark:text-dark-text">
                     <p>Subtotal</p>
-                    <p>${products.reduce((total, product) => total + Number(product.price), 0)}</p>
+                    <p className="text-indigo-600 dark:text-dark-primary">${products.reduce((total, product) => total + Number(product.price), 0)}</p>
                   </div>
-                  <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                  <div className="mt-6 " onClick={()=>{
-                    setCartOpen(false)
-                  }}>
+                  <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">Shipping and taxes calculated at checkout.</p>
+                  <div className="mt-6" onClick={() => setCartOpen(false)}>
                     <Link
                       to="/checkout"
-                      
                       state={{ cartProducts: products }}
-                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700"
+                      className="flex items-center justify-center rounded-xl border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200"
                     >
                       Checkout
                     </Link>
                   </div>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-400">
                     <p>
                       or{' '}
                       <button
                         type="button"
                         onClick={() => setCartOpen(false)}
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="font-medium text-indigo-600 dark:text-dark-primary hover:text-indigo-500 dark:hover:text-dark-primary-hover transition-colors"
                       >
                         Continue Shopping
                         <span aria-hidden="true"> &rarr;</span>
@@ -461,7 +446,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+      <div className="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity" />
     </Transition.Child>
 
     <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -475,7 +460,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100 translate-y-0 sm:scale-100"
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+          <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
             <Login onClose={() => setIsLoginOpen(false)} onSwitchToRegister={() => {
               setIsLoginOpen(false);
               setIsRegisterOpen(true);
@@ -502,7 +487,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity" />
         </Transition.Child>
 
 
@@ -517,7 +502,7 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white dark:bg-dark-surface-secondary px-4 pb-4 pt-5 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                 <Register onClose={() => setIsRegisterOpen(false)} onSwitchToLogin={() => {
                   setIsRegisterOpen(false);
                   setIsLoginOpen(true);
@@ -535,12 +520,12 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
 {/* -------------------NavBar-------------------------- */}
 
-    <Disclosure as="nav" className="bg-indigo-100 dark:bg-dark-surface border-b border-transparent dark:border-dark-border shadow-xl fixed z-20 w-full backdrop-blur-sm dark:backdrop-blur-md">
+    <Disclosure as="nav" className="bg-white/80 dark:bg-dark-surface/80 border-b border-gray-200 dark:border-dark-border shadow-lg fixed z-20 w-full backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
+        <div className="relative flex h-20 items-center justify-between">
           {/* Mobile menu button */}
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-indigo-600 dark:text-dark-primary hover:bg-indigo-700 dark:hover:bg-dark-primary transition-all hover:text-white focus:ring-2 focus:ring-indigo focus:outline-hidden focus:ring-inset">
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-xl p-2 text-indigo-600 dark:text-dark-primary hover:bg-indigo-50 dark:hover:bg-dark-primary/10 transition-all hover:text-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
               <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
               <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
             </DisclosureButton>
@@ -548,11 +533,11 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
           {/* Logo and main navigation */}
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
+            <div className="shrink-0 items-center mt-2 hidden md:flex">
               <img
                 alt="Your Company"
                 src="/images/logo.png.webp"
-                className="h-5 w-auto dark:invert dark:brightness-[0.85] dark:contrast-[1.15]"
+                className="h-8 w-auto dark:invert dark:brightness-[0.85] dark:contrast-[1.15] hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -561,27 +546,27 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                   item.submenu ? (
                     <Menu as="div" key={item.name} className="relative">
                       <MenuButton
-                        onClick={() => handleItemClick(item) }
+                        onClick={() => handleItemClick(item)}
                         className={classNames(
                           item.current 
-                            ? 'bg-indigo-700 text-white' 
-                            : 'text-indigo-800 dark:text-dark-text hover:bg-indigo-600 hover:text-white dark:hover:bg-dark-primary-hover',
-                          'rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out flex items-center'
+                            ? 'bg-indigo-600 text-white shadow-md' 
+                            : 'text-gray-700 dark:text-dark-text hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:text-indigo-700 dark:hover:text-dark-primary',
+                          'rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ease-in-out flex items-center gap-1'
                         )}
                       >
                         {item.name}
-                        <ChevronDownIcon className="ml-1 h-4 w-4" />
+                        <ChevronDownIcon className="h-4 w-4 transition-transform duration-200" />
                       </MenuButton>
 
                       <Transition
-                        enter="transition ease-out duration-100"
+                        enter="transition ease-out duration-200"
                         enterFrom="transform opacity-0 scale-95"
                         enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
+                        leave="transition ease-in duration-150"
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] max-h-[60vh] overflow-y-auto origin-top-left rounded-md bg-white dark:bg-dark-surface-secondary py-1 shadow-lg ring-1 ring-indigo-700 dark:ring-dark-border focus:outline-hidden">
+                        <MenuItems className="absolute grid grid-cols-3 left-0 z-10 mt-2 w-[50vw] max-h-[60vh] overflow-y-auto origin-top-left rounded-2xl bg-white dark:bg-dark-surface-secondary py-2 shadow-xl ring-1 ring-black/5 dark:ring-dark-border focus:outline-none">
                           {item.submenu.map((subItem) => (
                             <MenuItem key={subItem.name}>
                               {({ focus }) => (
@@ -593,9 +578,9 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                                   }}
                                   className={classNames(
                                     focus 
-                                      ? 'bg-indigo-300 dark:bg-dark-primary/30 transition-all rounded-sm' 
+                                      ? 'bg-indigo-50 dark:bg-dark-primary/20' 
                                       : '',
-                                    'block px-4 py-2 text-sm text-indigo-800 dark:text-dark-text hover:bg-indigo-100 dark:hover:bg-dark-primary/20'
+                                    'block px-4 py-2.5 text-sm text-gray-700 dark:text-dark-text hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:text-indigo-700 dark:hover:text-dark-primary transition-all duration-200'
                                   )}
                                 >
                                   {subItem.name}
@@ -613,8 +598,10 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
                       onClick={() => handleItemClick(item)}
                       aria-current={item.current ? 'page' : undefined}
                       className={classNames(
-                        item.current ? 'bg-indigo-900 text-white' : 'text-indigo-800 dark:text-gray-300 hover:bg-indigo-600 hover:text-white',
-                        'rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out'
+                        item.current 
+                          ? 'bg-indigo-600 text-white shadow-md' 
+                          : 'text-gray-700 dark:text-dark-text hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:text-indigo-700 dark:hover:text-dark-primary',
+                        'rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ease-in-out'
                       )}
                     >
                       {item.name}
@@ -626,12 +613,12 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
           </div>
 
           {/* Right side icons and buttons */}
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-3">
             {/* Wishlist icon */}
             <button
-            onClick={()=>{setWishlistOpen(true)}}
+              onClick={() => setWishlistOpen(true)}
               type="button"
-              className="relative rounded-full p-1 text-indigo-800 hover:bg-indigo-600 transition-all hover:text-white focus:outline-hidden"
+              className="relative rounded-xl p-2 text-gray-700 dark:text-dark-text hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:text-indigo-700 dark:hover:text-dark-primary transition-all duration-200"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View wishlist</span>
@@ -640,9 +627,9 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
             {/* Cart icon */}
             <button
-            onClick={openCartModal}
+              onClick={openCartModal}
               type="button"
-              className="relative rounded-full p-1 text-indigo-800 hover:bg-indigo-600 transition-all hover:text-white focus:outline-hidden"
+              className="relative rounded-xl p-2 text-gray-700 dark:text-dark-text hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:text-indigo-700 dark:hover:text-dark-primary transition-all duration-200"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View cart</span>
@@ -651,11 +638,11 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
 
             {/* Auth buttons */}
             {isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <span className="text-indigo-800 dark:text-gray-300">Welcome, {user.fullName}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-gray-700 dark:text-dark-text">Welcome, {user.fullName}</span>
                 <button
                   onClick={handleLogout}
-                  className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+                  className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200"
                 >
                   Logout
                 </button>
@@ -664,13 +651,13 @@ export default function Navbar({cartProducts,setCartProducts,wishProducts,setWis
               <>
                 <button
                   onClick={() => setIsLoginOpen(true)}
-                  className="hidden md:block rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+                  className="hidden md:block rounded-xl bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200"
                 >
                   Login
                 </button>
                 <button
                   onClick={() => setIsRegisterOpen(true)}
-                  className="hidden md:block rounded-md bg-indigo-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-800 transition-colors"
+                  className="hidden md:block rounded-xl bg-white dark:bg-dark-surface-secondary px-4 py-2 text-sm font-medium text-indigo-600 dark:text-dark-primary border border-indigo-600 dark:border-dark-primary shadow-sm hover:bg-indigo-50 dark:hover:bg-dark-primary/10 hover:shadow-md transition-all duration-200"
                 >
                   Register
                 </button>

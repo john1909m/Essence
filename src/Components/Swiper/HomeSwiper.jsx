@@ -50,22 +50,22 @@ export default function HomeSwiper() {
               loading="lazy" 
               alt="Fashion Collection"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent">
               <div className="absolute inset-0 flex items-center">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="max-w-2xl">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up">
                       Discover Your Style
                     </h1>
-                    <p className="text-lg md:text-xl text-white/90 mb-8">
+                    <p className="text-lg md:text-xl text-white/90 mb-8 animate-fade-in-up animation-delay-200">
                       Explore our latest collection of trendy fashion items
                     </p>
                     <Link 
                       to="/products/:all-products" 
-                      className="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                      className="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-fade-in-up animation-delay-400"
                     >
                       Shop Now
-                      <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </Link>
@@ -142,8 +142,7 @@ export default function HomeSwiper() {
 
         <div className="swiper-pagination !bottom-8"></div>
         
-        {/* <div className="swiper-button-prev !w-12 !h-12 !bg-white/20 !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/30 transition-all duration-300"></div>
-        <div className="swiper-button-next !w-12 !h-12 !bg-white/20 !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/30 transition-all duration-300"></div> */}
+        
       </div>
     </section>
   )
